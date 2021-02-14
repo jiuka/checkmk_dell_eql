@@ -1,4 +1,4 @@
-# Checkmk extension for ...
+# Checkmk extension for Dell EqualLogic Storage Systems
 
 ![build](https://github.com/jiuka/checkmk_phion/workflows/build/badge.svg)
 ![flake8](https://github.com/jiuka/checkmk_phion/workflows/Lint/badge.svg)
@@ -6,7 +6,20 @@
 
 ## Description
 
-This is a template to develop Checkmk Extensions
+### dell_qel_disk
+Monitors disk health and throughput per disk or summarized per device.
+
+### dell_eql_fan
+Monitors fan health and speed.
+
+### dell_qel_member
+Replaces the `dell_eql_storage` check and outputs why the storage device is in a unhealthy state.
+
+### dell_qel_temp
+Monitors temperature sensor state and readings.
+
+### dell_qel_volume
+Monitors state access type and iops, throughput and latency.
 
 ## Development
 
