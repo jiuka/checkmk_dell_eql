@@ -226,7 +226,7 @@ def test_discovery_dell_eql_volume(section, result):
         [
             dell_eql_volume.EqlVolume(
                 name='SAN-LUN0',
-                desc='',
+                desc='FooBar',
                 status=1,
                 access=1,
                 size=1073741824000,
@@ -242,6 +242,7 @@ def test_discovery_dell_eql_volume(section, result):
         [
             Result(state=State.OK, summary='Status: on-line'),
             Result(state=State.OK, summary='Access: read-write'),
+            Result(state=State.OK, summary='Description: FooBar'),
             Result(state=State.OK, summary='Pool: Member1'),
             Result(state=State.OK, summary='Read: 20.0 B/s'),
             Metric('disk_read_throughput', 20.0),
@@ -340,23 +341,6 @@ def test_check_dell_eql_volume(monkeypatch, item, params, section, result):
 def test_check_dell_eql_volume_w_param(monkeypatch, params, result):
     monkeypatch.setattr(dell_eql_volume, 'get_rate', get_rate)
     params.update({'adminStatus': 2, 'accessType': 2})
-    for i in list(dell_eql_volume.check_dell_eql_volume('SAN-LUN0', params, [
-        dell_eql_volume.EqlVolume(
-            name='SAN-LUN0',
-            desc='',
-            status=1,
-            access=1,
-            size=1073741824000,
-            pool='Member1',
-            write_ios=50,
-            read_ios=60,
-            write_throughput=10,
-            read_throughput=20,
-            write_latency=30,
-            read_latency=40
-        )
-    ])):
-        print(i)
     assert result in list(dell_eql_volume.check_dell_eql_volume('SAN-LUN0', params, [
         dell_eql_volume.EqlVolume(
             name='SAN-LUN0',

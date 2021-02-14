@@ -19,12 +19,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 # Example excerpt from SNMP data
-# .1.3.6.1.4.1.12740.2.1.1.1.9.1.1234567890 MEMBER1 --> EQLMEMBER-MIB::eqlMemberName
-# .1.3.6.1.4.1.12740.3.1.1.1.8.1.1234567890.6 1 --> EQLDISK-MIB::eqlDiskStatus
-# .1.3.6.1.4.1.12740.3.1.1.1.11.1.1234567890.6 5 --> EQLDISK-MIB::eqlDiskSlot
-# .1.3.6.1.4.1.12740.3.1.1.1.17.1.1234567890.6 1 --> EQLDISK-MIB::eqlDiskHealth
-# .1.3.6.1.4.1.12740.3.1.2.1.2.1.1234567890.6 10676042 --> EQLDISK-MIB::eqlDiskStatusBytesRead
-# .1.3.6.1.4.1.12740.3.1.2.1.3.1.1234567890.6 12097 --> EQLDISK-MIB::eqlDiskStatusBytesWritten
+# .1.3.6.1.4.1.12740.2.1.1.1.9.1.1715262484 MEMBER1 --> EQLMEMBER-MIB::eqlMemberName
+# .1.3.6.1.4.1.12740.3.1.1.1.8.1.1715262484.6 1 --> EQLDISK-MIB::eqlDiskStatus
+# .1.3.6.1.4.1.12740.3.1.1.1.11.1.1715262484.6 5 --> EQLDISK-MIB::eqlDiskSlot
+# .1.3.6.1.4.1.12740.3.1.1.1.17.1.1715262484.6 1 --> EQLDISK-MIB::eqlDiskHealth
+# .1.3.6.1.4.1.12740.3.1.2.1.2.1.1715262484.6 10676042 --> EQLDISK-MIB::eqlDiskStatusBytesRead
+# .1.3.6.1.4.1.12740.3.1.2.1.3.1.1715262484.6 12097 --> EQLDISK-MIB::eqlDiskStatusBytesWritten
 
 
 import time
@@ -136,6 +136,7 @@ def check_dell_eql_disk(item, params, section):
         'read_throughput': 0,
         'write_throughput': 0
     }
+    found = False
 
     if item.startswith('SUMMARY '):
         for name, value in section.items():
@@ -147,6 +148,8 @@ def check_dell_eql_disk(item, params, section):
             stat['read_throughput'] += value['read_throughput']
             stat['write_throughput'] += value['write_throughput']
 
+            found = True
+
     else:
         for name, value in section.items():
             if not name == item:
@@ -156,6 +159,11 @@ def check_dell_eql_disk(item, params, section):
 
             stat['read_throughput'] = value['read_throughput']
             stat['write_throughput'] = value['write_throughput']
+
+            found = True
+
+    if not found:
+        return
 
     value_store = get_value_store()
     for key in ['read_throughput', 'write_throughput']:
