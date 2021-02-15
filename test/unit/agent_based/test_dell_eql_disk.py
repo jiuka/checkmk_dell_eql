@@ -101,7 +101,9 @@ def test_parse_dell_eql_disk(string_table, result):
     ),
 ])
 def test_discovery_dell_eql_disk(params, section, result):
-    assert list(dell_eql_disk.discovery_dell_eql_disk(params, section)) == result
+    discoverd = list(dell_eql_disk.discovery_dell_eql_disk(params, section))
+    discoverd.sort()
+    assert discoverd == result
 
 
 @pytest.mark.parametrize('item, section, result', [
