@@ -50,7 +50,6 @@ from .agent_based_api.v1 import (
     State,
 )
 from .utils import diskstat
-from cmk.gui.plugins.metrics import MB
 
 
 class EqlVolume(NamedTuple):
@@ -83,7 +82,7 @@ def parse_dell_eql_volume(string_table):
                 desc=desc,
                 status=int(status),
                 access=int(access),
-                size=int(size) * MB,
+                size=int(size) * 1024 * 1024,
                 pool=poolname[pool],
                 write_throughput=int(volstats[idx][0]),
                 read_throughput=int(volstats[idx][1]),

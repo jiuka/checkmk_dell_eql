@@ -41,7 +41,6 @@ from .agent_based_api.v1 import (
     SNMPTree,
     State,
 )
-from cmk.gui.plugins.metrics import MB
 
 
 class EqlMember(NamedTuple):
@@ -148,10 +147,10 @@ def parse_dell_eql_member(string_table):
                 warnings=[DELL_EQL_WARNING_CONDITIONS[idx] for idx in byte_to_index(warnings[:4])],
                 critical=[DELL_EQL_CRITICAL_CONDITIONS[idx] for idx in byte_to_index(critical[:4])],
                 raid=int(raid),
-                storage=int(storage) * MB,
-                repl=int(repl) * MB,
-                snap=int(snap) * MB,
-                used=int(used) * MB,
+                storage=int(storage) * 1024 * 1024,
+                repl=int(repl) * 1024 * 1024,
+                snap=int(snap) * 1024 * 1024,
+                used=int(used) * 1024 * 1024,
             )
         )
     return parsed
