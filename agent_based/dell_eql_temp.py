@@ -33,6 +33,7 @@
 
 from typing import NamedTuple, Tuple
 from .agent_based_api.v1 import (
+    get_value_store,
     exists,
     OIDEnd,
     register,
@@ -121,6 +122,7 @@ def check_dell_eql_temp(item, params, section):
             reading=temp.value,
             params=params,
             unique_name="dell_eql_temp.%s" % item,
+            value_store=get_value_store(),
             dev_levels= temp.levels_upper,
             dev_levels_lower = temp.levels_lower,
             dev_status=temp.state
