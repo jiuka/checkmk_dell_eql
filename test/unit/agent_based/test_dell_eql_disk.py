@@ -33,6 +33,10 @@ def get_rate(_value_store, _key, _time, value):
     return value
 
 
+def get_value_store():
+    return {}
+
+
 SAMPLE_STRING_TABLE = [
     [['1234567890', 'MEMBER1'], ['1234567891', 'MEMBER2']],
     [
@@ -139,6 +143,7 @@ def test_discovery_dell_eql_disk(params, section, result):
 ])
 def test_check_dell_eql_disk(monkeypatch, item, section, result):
     monkeypatch.setattr(dell_eql_disk, 'get_rate', get_rate)
+    monkeypatch.setattr(dell_eql_disk, 'get_value_store', get_value_store)
     assert list(dell_eql_disk.check_dell_eql_disk(item, {}, section)) == result
 
 
@@ -170,4 +175,5 @@ def test_check_dell_eql_disk(monkeypatch, item, section, result):
 ])
 def test_check_dell_eql_disk_w_param(monkeypatch, params, result):
     monkeypatch.setattr(dell_eql_disk, 'get_rate', get_rate)
+    monkeypatch.setattr(dell_eql_disk, 'get_value_store', get_value_store)
     assert result in list(dell_eql_disk.check_dell_eql_disk('MEMBER1.6', params, SAMPLE_PARSED))

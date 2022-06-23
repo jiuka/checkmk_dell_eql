@@ -29,6 +29,10 @@ from cmk.base.plugins.agent_based.agent_based_api.v1 import (
 from cmk.base.plugins.agent_based import dell_eql_temp
 
 
+def get_value_store():
+    return {}
+
+
 @pytest.mark.parametrize('string_table, result', [
     (
         [[], []], []
@@ -112,6 +116,7 @@ def test_discovery_dell_eql_temp(section, result):
     ),
 ])
 def test_check_dell_eql_temp(monkeypatch, item, params, section, result):
+    monkeypatch.setattr(dell_eql_temp, 'get_value_store', get_value_store)
     assert list(dell_eql_temp.check_dell_eql_temp(item, params, section)) == result
 
 
@@ -154,6 +159,7 @@ def test_check_dell_eql_temp(monkeypatch, item, params, section, result):
     ),
 ])
 def test_check_dell_eql_temp_w_param(monkeypatch, params, result):
+    monkeypatch.setattr(dell_eql_temp, 'get_value_store', get_value_store)
     assert result in list(dell_eql_temp.check_dell_eql_temp('MEMBER1.1', params, [
         dell_eql_temp.EqlTemperature(
             item='MEMBER1.1',

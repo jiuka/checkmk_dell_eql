@@ -33,6 +33,10 @@ def get_rate(_value_store, _key, _time, value):
     return value
 
 
+def get_value_store():
+    return {}
+
+
 @pytest.mark.parametrize('string_table, result', [
     (
         [[], [], []], []
@@ -261,6 +265,7 @@ def test_discovery_dell_eql_volume(section, result):
 ])
 def test_check_dell_eql_volume(monkeypatch, item, params, section, result):
     monkeypatch.setattr(dell_eql_volume, 'get_rate', get_rate)
+    monkeypatch.setattr(dell_eql_volume, 'get_value_store', get_value_store)
     assert list(dell_eql_volume.check_dell_eql_volume(item, params, section)) == result
 
 
@@ -340,6 +345,7 @@ def test_check_dell_eql_volume(monkeypatch, item, params, section, result):
 ])
 def test_check_dell_eql_volume_w_param(monkeypatch, params, result):
     monkeypatch.setattr(dell_eql_volume, 'get_rate', get_rate)
+    monkeypatch.setattr(dell_eql_volume, 'get_value_store', get_value_store)
     params.update({'adminStatus': 2, 'accessType': 2})
     assert result in list(dell_eql_volume.check_dell_eql_volume('SAN-LUN0', params, [
         dell_eql_volume.EqlVolume(
