@@ -6,6 +6,8 @@
 
 ## Description
 
+> :warning: I do **NOT** have access to the hardware to test this any more.
+
 ### dell_qel_disk
 Monitors disk health and throughput per disk or summarized per device.
 
