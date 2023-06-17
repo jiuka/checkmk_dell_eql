@@ -109,7 +109,7 @@ def test_discovery_dell_eql_temp(section, result):
         [
             Result(state=State.OK, summary='Backplane sensor 0'),
             Metric('temp', 29.0, levels=(45.0, 50.0)),
-            Result(state=State.OK, summary='Temperature: 29°C'),
+            Result(state=State.OK, summary='Temperature: 29 °C'),
             Result(state=State.OK, notice='State on device: None'),
             Result(state=State.OK, notice='Configuration: prefer user levels over device levels (used device levels)'),
         ]
@@ -123,39 +123,39 @@ def test_check_dell_eql_temp(monkeypatch, item, params, section, result):
 @pytest.mark.parametrize('params, result', [
     (
         {'levels': (24, 26)},
-        Result(state=State.OK, summary='Temperature: 22°C'),
+        Result(state=State.OK, summary='Temperature: 22 °C'),
     ),
     (
         {'levels': (18, 26)},
-        Result(state=State.WARN, summary='Temperature: 22°C (warn/crit at 18°C/26°C)'),
+        Result(state=State.WARN, summary='Temperature: 22 °C (warn/crit at 18 °C/26 °C)'),
     ),
     (
         {'levels': (18, 20)},
-        Result(state=State.CRIT, summary='Temperature: 22°C (warn/crit at 18°C/20°C)'),
+        Result(state=State.CRIT, summary='Temperature: 22 °C (warn/crit at 18 °C/20 °C)'),
     ),
     (
         {'levels_lower': (20, 18)},
-        Result(state=State.OK, summary='Temperature: 22°C'),
+        Result(state=State.OK, summary='Temperature: 22 °C'),
     ),
     (
         {'levels_lower': (26, 18)},
-        Result(state=State.WARN, summary='Temperature: 22°C (warn/crit below 26°C/18°C)'),
+        Result(state=State.WARN, summary='Temperature: 22 °C (warn/crit below 26 °C/18 °C)'),
     ),
     (
         {'levels_lower': (26, 24)},
-        Result(state=State.CRIT, summary='Temperature: 22°C (warn/crit below 26°C/24°C)'),
+        Result(state=State.CRIT, summary='Temperature: 22 °C (warn/crit below 26 °C/24 °C)'),
     ),
     (
         {'output_unit': 'c'},
-        Result(state=State.OK, summary='Temperature: 22°C'),
+        Result(state=State.OK, summary='Temperature: 22 °C'),
     ),
     (
         {'output_unit': 'f'},
-        Result(state=State.OK, summary='Temperature: 71°F'),
+        Result(state=State.OK, summary='Temperature: 71 °F'),
     ),
     (
         {'output_unit': 'k'},
-        Result(state=State.OK, summary='Temperature: 295K'),
+        Result(state=State.OK, summary='Temperature: 295 K'),
     ),
 ])
 def test_check_dell_eql_temp_w_param(monkeypatch, params, result):
